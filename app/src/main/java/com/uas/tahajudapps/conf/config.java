@@ -1,13 +1,7 @@
 package com.uas.tahajudapps.conf;
 
 public class config {
-    private static String URL_GET_CONTENT;
     private static String URL_GETID_CONTENT;
-
-    public  static final String getContentID(String id){
-        URL_GET_CONTENT = "https://tugas.ammarprojects.com/Tahajud/content/getContent.php?id="+id;
-        return URL_GETID_CONTENT;
-    }
 
     public static final String getURL(String id){
         URL_GETID_CONTENT = "https://tugas.ammarprojects.com/Tahajud/content/getid.php?id="+id;

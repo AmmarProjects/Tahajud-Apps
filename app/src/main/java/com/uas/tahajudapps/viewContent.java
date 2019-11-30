@@ -3,6 +3,7 @@ package com.uas.tahajudapps;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -98,8 +99,45 @@ public class viewContent extends AppCompatActivity implements View.OnClickListen
         Controller.getInstance().addToRequestQueue(updateReq);
     }
 
-    private void deleteContent(){
-        
+    private void deleteContent()
+    {
+
+        StringRequest delReq = new StringRequest(Request.Method.POST,config.URL_DELETE_CONTENT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        pd.cancel();
+                        Log.d("volley","response : " + response.toString());
+                        try {
+                            JSONObject res = new JSONObject(response);
+                            Toast.makeText(viewContent.this,"Data Berhasil Dihapus", Toast.LENGTH_SHORT).show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Intent intent = new Intent(viewContent.this, listContent.class);
+                        intent.putExtra("key",category);
+                        startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pd.cancel();
+                        Log.d("volley", "error : " + error.getMessage());
+                        Toast.makeText(viewContent.this, "pesan : Gagal Menghapus Data", Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("id",id);
+                return map;
+            }
+        };
+
+        Controller.getInstance().addToRequestQueue(delReq);
     }
 
     @Override
