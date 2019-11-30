@@ -10,7 +10,9 @@
         android:roundIcon="@drawable/launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FiturAdmin"></activity>
+        <activity android:name=".insertContent"></activity>
+        <activity android:name=".listContent" />
+        <activity android:name=".FiturAdmin" />
         <activity android:name=".TampilanAdmin" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity" />
