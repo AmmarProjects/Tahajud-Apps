@@ -1,14 +1,27 @@
 package com.uas.tahajudapps.modal;
 
 public class Artikel {
+    private String id;
     private String title;
     private String date;
     private String content;
 
-    public Artikel(String title, String date, String content) {
-        this.title = title;
-        this.date = date;
-        this.content = content;
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    private String image;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {

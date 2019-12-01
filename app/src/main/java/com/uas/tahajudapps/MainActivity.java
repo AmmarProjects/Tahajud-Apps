@@ -1,7 +1,9 @@
 package com.uas.tahajudapps;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,28 +12,45 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.uas.tahajudapps.adapter.artikelAdapter;
+import com.uas.tahajudapps.adapter.crud_contentAdapter;
+import com.uas.tahajudapps.conf.Controller;
+import com.uas.tahajudapps.conf.config;
 import com.uas.tahajudapps.modal.Artikel;
+import com.uas.tahajudapps.modal.Content;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private artikelAdapter adapterArtikel;
-    private ArrayList<Artikel> artikelArrayList;
+    RecyclerView recyclerArtikel;
+    RecyclerView.Adapter adapterArtikel;
+    RecyclerView.LayoutManager layoutManager;
+    ProgressDialog pd;
+    ArrayList<Artikel> artikelArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        addArtikel();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_artikel);
-        adapterArtikel = new artikelAdapter(artikelArrayList);
+        recyclerArtikel = (RecyclerView) findViewById(R.id.recycler_artikel);
+        artikelArrayList = new ArrayList<>();
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapterArtikel);
+        layoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerArtikel.setLayoutManager(layoutManager);
+
+        adapterArtikel = new artikelAdapter(MainActivity.this, artikelArrayList);
+        recyclerArtikel.setAdapter(adapterArtikel);
+
+        getJSON();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,12 +65,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    void addArtikel() {
-        artikelArrayList = new ArrayList<>();
-        artikelArrayList.add(new Artikel("The Power of Tahajud", "Jum’at 15 Nov 2019", "Tahajud adalah salah satu"));
-        artikelArrayList.add(new Artikel("The Infinity", "Jum’at 15 Nov 2019", "Tahajud adalah salah satu"));
     }
 
     public void onClick(View v) {
@@ -72,5 +85,38 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("key", "4");
             startActivity(intent);
         }
+    }
+
+    private void getJSON() {
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.POST, config.URL_GET_ARTICLE, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d("volley", "response : " + response.toString());
+
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject data = response.getJSONObject(i);
+                        Artikel zz = new Artikel();
+                        zz.setId(data.getString("id_article"));
+                        zz.setTitle(data.getString("title_article"));
+                        zz.setDate(data.getString("date_article"));
+                        zz.setContent(data.getString("content_article"));
+                        zz.setImage(data.getString("img_article"));
+
+                        artikelArrayList.add(zz);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                adapterArtikel.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("volley", "error guys: " + error.getMessage());
+            }
+        });
+        Controller.getInstance().addToRequestQueue(arrayRequest);
     }
 }

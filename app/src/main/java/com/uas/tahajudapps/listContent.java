@@ -35,7 +35,6 @@ public class listContent extends AppCompatActivity {
 
     private String value;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

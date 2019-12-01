@@ -58,7 +58,6 @@ public class insertContent extends AppCompatActivity implements View.OnClickList
                         pd.setMessage("Menyimpan Data");
                         pd.setCancelable(false);
                         pd.show();
-//                        pd.cancel();
                         try {
                             JSONObject res = new JSONObject(response);
                             Toast.makeText(insertContent.this, "Data Berhasil Disimpan" , Toast.LENGTH_SHORT).show();
@@ -86,7 +85,6 @@ public class insertContent extends AppCompatActivity implements View.OnClickList
                 return map;
             }
         };
-
         Controller.getInstance().addToRequestQueue(sendData);
     }
 
