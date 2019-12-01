@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.uas.tahajudapps.R;
 import com.uas.tahajudapps.modal.Artikel;
-import com.uas.tahajudapps.viewArtikel;
-import com.uas.tahajudapps.viewContent;
+import com.uas.tahajudapps.Artikel_Activity;
 
 import java.util.ArrayList;
 
@@ -48,7 +46,7 @@ public class artikelAdapter extends RecyclerView.Adapter<artikelAdapter.ArtikelV
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, viewArtikel.class);
+                Intent intent = new Intent(context, Artikel_Activity.class);
                 intent.putExtra("id",dataList.get(position).getId());
                 intent.putExtra("title",dataList.get(position).getTitle());
                 intent.putExtra("date",dataList.get(position).getDate());
@@ -62,7 +60,7 @@ public class artikelAdapter extends RecyclerView.Adapter<artikelAdapter.ArtikelV
         holder.btnImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, viewArtikel.class);
+                Intent intent = new Intent(context, Artikel_Activity.class);
                 intent.putExtra("id",dataList.get(position).getId());
                 intent.putExtra("title",dataList.get(position).getTitle());
                 intent.putExtra("date",dataList.get(position).getDate());

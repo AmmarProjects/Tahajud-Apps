@@ -19,9 +19,9 @@ public class TampilanAdmin extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(TampilanAdmin.this, FiturAdmin.class);
             startActivity(intent);
         }
-//        else if (view.getId() == R.id.card_artikel){
-//            Intent intent = new Intent(AdminFitur.this, CRUDArtikel.class);
-//            startActivity(intent);
-//        }
+        else if (view.getId() == R.id.card_artikel){
+            Intent intent = new Intent(TampilanAdmin.this, listArticle.class);
+            startActivity(intent);
+        }
     }
 }

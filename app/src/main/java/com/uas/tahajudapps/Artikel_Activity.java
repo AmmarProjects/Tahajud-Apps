@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class viewArtikel extends AppCompatActivity {
+public class Artikel_Activity extends AppCompatActivity {
 
     private String id, title, date, content, image;
     TextView tvTitle, tvDate, tvArticle;
@@ -14,7 +14,7 @@ public class viewArtikel extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_artikel);
+        setContentView(R.layout.activity_artikel);
         getSupportActionBar().hide();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

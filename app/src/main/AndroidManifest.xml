@@ -5,12 +5,15 @@
     <application
         android:name=".conf.Controller"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/launcher"
         android:label="@string/app_name"
         android:roundIcon="@drawable/launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewArtikel"></activity>
+        <activity android:name=".insertArticle"></activity>
+        <activity android:name=".viewArticle" />
+        <activity android:name=".listArticle" />
+        <activity android:name=".Artikel_Activity" />
         <activity android:name=".viewContent" />
         <activity android:name=".insertContent" />
         <activity android:name=".listContent" />

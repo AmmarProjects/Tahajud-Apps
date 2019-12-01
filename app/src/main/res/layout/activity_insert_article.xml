@@ -32,7 +32,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
-                android:text="Manajemen Konten :"
+                android:text="Manajemen Artikel :"
                 android:textColor="@color/color3"
                 android:textSize="12dp"
                 android:textStyle="bold" />
@@ -57,11 +57,11 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/color4"
                         android:textSize="12dp"
-                        android:text="Judul Konten"/>
+                        android:text="Judul Artikel"/>
 
                     <EditText
-                        android:id="@+id/edt_title_content"
-                        android:hint="Masukkan Judul Konten"
+                        android:id="@+id/edt_title_article"
+                        android:hint="Masukkan Judul Artikel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16dp"
@@ -92,11 +92,11 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/color4"
                         android:textSize="12dp"
-                        android:text="Isi Konten"/>
+                        android:text="Isi Artikel"/>
 
                     <EditText
-                        android:id="@+id/edt_body_content"
-                        android:hint="Masukkan Isi Konten"
+                        android:id="@+id/edt_body_article"
+                        android:hint="Masukkan Isi Artikel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16dp"
@@ -109,10 +109,10 @@
             </androidx.cardview.widget.CardView>
 
             <Button
-                android:id="@+id/btn_add_content"
+                android:id="@+id/btn_add_article"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SIMPAN KONTEN"
+                android:text="SIMPAN ARTIKEL"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
