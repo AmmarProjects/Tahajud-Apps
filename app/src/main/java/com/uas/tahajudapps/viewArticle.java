@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -94,12 +95,49 @@ public class viewArticle extends AppCompatActivity implements View.OnClickListen
 
         Controller.getInstance().addToRequestQueue(updateReq);
     }
+
+    private void deleteArticle()
+    {
+        StringRequest delReq = new   StringRequest(Request.Method.POST,config.URL_DELETE_ARTICLE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("volley","response : " + response.toString());
+                        try {
+                            JSONObject res = new JSONObject(response);
+                            Toast.makeText(viewArticle.this,"Data Berhasil Dihapus", Toast.LENGTH_SHORT).show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Intent intent = new Intent(viewArticle.this, TampilanAdmin.class);
+                        startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("volley", "error : " + error.getMessage());
+                        Toast.makeText(viewArticle.this, "pesan : Gagal Menghapus Data", Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("id",id);
+                return map;
+            }
+        };
+
+        Controller.getInstance().addToRequestQueue(delReq);
+    }
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_update_article){
             updateArticle();
         }else if(v.getId() == R.id.btn_delete_article){
-//            deleteArticle();
+            deleteArticle();
         }
     }
 }
