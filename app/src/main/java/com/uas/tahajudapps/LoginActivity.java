@@ -11,6 +11,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
 
@@ -36,34 +50,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.btn_login:
-                String username = edtUserID.getText().toString().trim();
-                String password = edtPassword.getText().toString().trim();
-                if (validateInputs()){
-                    if (username.equals("admin") && password.equals("admin")){
-                        loadDashboard();
-                    }else{
-                        Toast toast = Toast.makeText(getApplicationContext(), "Login Gagal", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                }
-                break;
-            case R.id.btn_cant_login:
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivity(intent);
-                finish();
-                break;
+        if (view.getId() == R.id.btn_login) {
+            if (validateInputs()){
+                sendLogin();
+            }
+        }else if(view.getId() == R.id.btn_cant_login){
+            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
     private boolean validateInputs() {
-        if(edtUserID.equals("")){
+        if(edtUserID.getText().toString().trim().equals("")){
             edtUserID.setError("Username tidak boleh kosong");
             edtUserID.requestFocus();
             return false;
         }
-        if(edtPassword.equals("")){
+        if(edtPassword.getText().toString().trim().equals("")){
             edtPassword.setError("Password tidak boleh kosong");
             edtPassword.requestFocus();
             return false;
@@ -71,9 +75,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return true;
     }
 
-    private void loadDashboard() {
-        Intent i = new Intent(getApplicationContext(), TampilanAdmin.class);
-        startActivity(i);
-        finish();
+    private void sendLogin() {
+        StringRequest loginRequest = new StringRequest(Request.Method.POST, "https://tugas.ammarprojects.com/Tahajud/user/login.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            String status = json.getString("status");
+                            if(status.equals("success")){
+                                Intent intent = new Intent(LoginActivity.this, TampilanAdmin.class);
+                                Toast.makeText(getApplicationContext(), "Login Berhasil", Toast.LENGTH_SHORT).show();
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(getApplicationContext(), "Username & Password Salah", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("username", edtUserID .getText().toString());
+                params.put("password", edtPassword.getText().toString());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(loginRequest);
     }
 }

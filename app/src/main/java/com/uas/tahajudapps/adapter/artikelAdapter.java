@@ -53,7 +53,6 @@ public class artikelAdapter extends RecyclerView.Adapter<artikelAdapter.ArtikelV
                 intent.putExtra("content",dataList.get(position).getContent());
                 intent.putExtra("image",dataList.get(position).getImage());
                 context.startActivity(intent);
-                Toast.makeText(context, "You Clicked "+dataList.get(position).getId(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -67,7 +66,6 @@ public class artikelAdapter extends RecyclerView.Adapter<artikelAdapter.ArtikelV
                 intent.putExtra("content",dataList.get(position).getContent());
                 intent.putExtra("image",dataList.get(position).getImage());
                 context.startActivity(intent);
-                Toast.makeText(context, "You Clicked "+dataList.get(position).getId(), Toast.LENGTH_LONG).show();
             }
         });
     }

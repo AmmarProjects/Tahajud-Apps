@@ -53,7 +53,6 @@ public class crud_artikelAdapter extends RecyclerView.Adapter<crud_artikelAdapte
                 intent.putExtra("content",dataList.get(position).getContent());
                 intent.putExtra("image",dataList.get(position).getImage());
                 context.startActivity(intent);
-                Toast.makeText(context, "You Clicked "+dataList.get(position).getId(), Toast.LENGTH_LONG).show();
             }
         });
     }

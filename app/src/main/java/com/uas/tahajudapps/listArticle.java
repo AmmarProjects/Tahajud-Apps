@@ -89,7 +89,7 @@ public class listArticle extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 pd.cancel();
-                Log.d("volley", "error guys: " + error.getMessage());
+                Log.d("volley", "error: " + error.getMessage());
             }
         });
         Controller.getInstance().addToRequestQueue(arrayRequest);
